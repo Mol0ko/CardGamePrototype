@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Collections;
 using System.Collections.Generic;
 using System.Xml.Linq;
 
@@ -17,6 +16,7 @@ namespace Cards
         private static readonly List<uint> _uncollectibleIds = new List<uint>();
 
         [RuntimeInitializeOnLoadMethod(RuntimeInitializeLoadType.AfterAssembliesLoaded)]
+        
         private static void Configuration()
         {
             var id = 0;

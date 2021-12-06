@@ -14,7 +14,7 @@ namespace Cards.ScriptableObjects
 		private bool _isConstruct;
 
 		[SerializeField]
-		private SideType _sideType;
+		private HeroClass _sideType;
 		[SerializeField]
 		private ushort _cost;
 		[SerializeField, OneLine(Header = LineHeader.Short)]

@@ -1,12 +1,10 @@
 ﻿using System;
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using OneLine;
 
 namespace Cards
 {
-	[System.Serializable]
+    [Serializable]
 	public struct CardPropertyData
 	{
 		[SerializeField]
@@ -58,5 +56,22 @@ namespace Cards
 		{
 			Cost = cost; Attack = attack; Health = health;
 		}
+	}
+	
+	[Serializable]
+	public struct HeroClasses
+	{
+		public HeroData Priest { get; set; }
+		public HeroData Mage { get; set; }
+		public HeroData Hunter { get; set; }
+		public HeroData Warrior { get; set; }
+	}
+
+	[Serializable]
+	public struct HeroData
+	{
+		public string Name { get; set; }
+		public string AvatarMaterialPath { get; set; }
+		public int Hp { get; set; }
 	}
 }

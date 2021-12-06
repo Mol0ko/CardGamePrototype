@@ -1,0 +1,22 @@
+{
+    "Priest": {
+        "Name": "Anduin Wrynn",
+        "AvatarMaterialPath": "Cards/Sprites/Materials/Anduin_full.mat",
+        "Hp": 30
+    },
+    "Mage": {
+        "Name": "Jaina Proudmoore",
+        "AvatarMaterialPath": "Cards/Sprites/Materials/Jaina_full.mat",
+        "Hp": 30
+    },
+    "Hunter": {
+        "Name": "Rexxar",
+        "AvatarMaterialPath": "Cards/Sprites/Materials/Rexxar_full.mat",
+        "Hp": 30
+    },
+    "Warrior": {
+        "Name": "Garrosh Hellscream",
+        "AvatarMaterialPath": "Cards/Sprites/Materials/Garrosh_full.mat",
+        "Hp": 30
+    }
+}

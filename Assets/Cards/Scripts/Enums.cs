@@ -1,10 +1,6 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
-
-namespace Cards
+﻿namespace Cards
 {
-	public enum CardUnitType : byte
+    public enum CardUnitType : byte
 	{
 		None = 0,
 		Murloc = 1,
@@ -13,10 +9,11 @@ namespace Cards
 		Mech = 4
 	}
 
-	public enum SideType : byte
+	public enum HeroClass : byte
 	{
-		Common = 0,
+		Hunter = 0,
 		Mage = 1,
-		Warrior = 2
+		Warrior = 2,
+		Priest = 3
 	}
 }
