@@ -61,17 +61,17 @@ namespace Cards
 	[Serializable]
 	public struct HeroClasses
 	{
-		public HeroData Priest { get; set; }
-		public HeroData Mage { get; set; }
-		public HeroData Hunter { get; set; }
-		public HeroData Warrior { get; set; }
+		public HeroData Priest;
+		public HeroData Mage;
+		public HeroData Hunter;
+		public HeroData Warrior;
 	}
 
 	[Serializable]
 	public struct HeroData
 	{
-		public string Name { get; set; }
-		public string AvatarMaterialPath { get; set; }
-		public int Hp { get; set; }
+		public string Name;
+		public string AvatarMaterial;
+		public int Hp;
 	}
 }

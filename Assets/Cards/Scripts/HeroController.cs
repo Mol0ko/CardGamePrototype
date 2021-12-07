@@ -1,4 +1,5 @@
-﻿using TMPro;
+﻿using System.Linq;
+using TMPro;
 using UnityEngine;
 
 namespace Cards
@@ -15,6 +16,8 @@ namespace Cards
         private TextAsset _heroesJsonFile;
         [SerializeField]
         private HeroClass _class;
+        [SerializeField]
+        private Material[] _avatarMaterials;
 
         private void Awake()
         {
@@ -42,7 +45,7 @@ namespace Cards
                     break;
             }
 
-            _avatar.material = Resources.Load(heroData.AvatarMaterialPath, typeof(Material)) as Material;
+            _avatar.material = _avatarMaterials.FirstOrDefault(material => material.name == heroData.AvatarMaterial);
             _name.text = heroData.Name;
             _hp.text = heroData.Hp.ToString();
         }
