@@ -1255,7 +1255,7 @@ Transform:
   m_LocalScale: {x: 3.5, y: 0.05, z: 5}
   m_Children: []
   m_Father: {fileID: 1685148346}
-  m_RootOrder: 0
+  m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!65 &920635744
 BoxCollider:
@@ -2235,8 +2235,8 @@ Transform:
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
-  - {fileID: 920635743}
   - {fileID: 570069877}
+  - {fileID: 920635743}
   - {fileID: 226282809}
   m_Father: {fileID: 1702292344}
   m_RootOrder: 1
@@ -2408,9 +2408,9 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 3229ff84acff46246a9bd0591a1ab7f6, type: 2}
   - {fileID: 11400000, guid: cb7286cd1080bf04cbbf4a2265e52f38, type: 2}
   - {fileID: 11400000, guid: 93d377064370f4443970eeb9769fd723, type: 2}
-  _player1Deck: {fileID: 920635743}
-  _player2Deck: {fileID: 442491212}
-  _player1Hand:
+  _player1DeckParent: {fileID: 920635743}
+  _player2DeckParent: {fileID: 442491212}
+  _player1HandParents:
   - {fileID: 1138334312}
   - {fileID: 1349373385}
   - {fileID: 606613707}
@@ -2419,7 +2419,7 @@ MonoBehaviour:
   - {fileID: 1412154818}
   - {fileID: 910185217}
   - {fileID: 994269963}
-  _player2Hand:
+  _player2HandParents:
   - {fileID: 1063158964}
   - {fileID: 167231965}
   - {fileID: 2080056894}
@@ -2428,6 +2428,8 @@ MonoBehaviour:
   - {fileID: 1213991435}
   - {fileID: 718991587}
   - {fileID: 1581949816}
+  _cardPrefab: {fileID: 1307249474124220039, guid: 1efffdaff08b40c44aa84086651f4a25,
+    type: 3}
 --- !u!4 &2000741652
 Transform:
   m_ObjectHideFlags: 0
@@ -2640,7 +2642,7 @@ PrefabInstance:
     - target: {fileID: 7918910454483895865, guid: d53d9bcf5d6ba42b58ceafc2a554ad1c,
         type: 3}
       propertyPath: m_RootOrder
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 7918910454483895865, guid: d53d9bcf5d6ba42b58ceafc2a554ad1c,
         type: 3}

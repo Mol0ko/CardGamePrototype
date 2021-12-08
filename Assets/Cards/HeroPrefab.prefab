@@ -666,6 +666,7 @@ MonoBehaviour:
   _avatar: {fileID: 7918910455955106397}
   _name: {fileID: 7918910455445638184}
   _hp: {fileID: 7918910454150586538}
+  _manaValue: {fileID: 3483050552917713626}
   _heroesJsonFile: {fileID: 4900000, guid: eb89cf075e9e9470db28642df5725ec6, type: 3}
   _class: 0
   _avatarMaterials:

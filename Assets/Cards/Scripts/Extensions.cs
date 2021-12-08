@@ -16,7 +16,7 @@ namespace Cards
         private static readonly List<uint> _uncollectibleIds = new List<uint>();
 
         [RuntimeInitializeOnLoadMethod(RuntimeInitializeLoadType.AfterAssembliesLoaded)]
-        
+
         private static void Configuration()
         {
             var id = 0;
@@ -75,6 +75,21 @@ namespace Cards
             if (!_descriptions.ContainsKey(id)) Debug.LogError($" XML-документ не содержит ключ {id}");
 #endif
             return _uncollectibleIds.Contains(id);
+        }
+    }
+
+    static class RandomExtensions
+    {
+        public static void Shuffle<T>(this System.Random random, T[] array)
+        {
+            int n = array.Length;
+            while (n > 1)
+            {
+                int k = random.Next(n--);
+                T temp = array[n];
+                array[n] = array[k];
+                array[k] = temp;
+            }
         }
     }
 }

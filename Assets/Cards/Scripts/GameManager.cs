@@ -1,4 +1,6 @@
-﻿using Cards.ScriptableObjects;
+﻿using System.Collections.Generic;
+using System.Linq;
+using Cards.ScriptableObjects;
 using UnityEngine;
 
 namespace Cards
@@ -14,20 +16,25 @@ namespace Cards
         private CardPackConfiguration[] _player2Packs;
 
         [SerializeField, Space]
-        private Transform _player1Deck;
+        private Transform _player1DeckParent;
         [SerializeField]
-        private Transform _player2Deck;
+        private Transform _player2DeckParent;
         [SerializeField]
-        private Transform[] _player1Hand;
+        private Transform[] _player1HandParents;
         [SerializeField]
-        private Transform[] _player2Hand;
+        private Transform[] _player2HandParents;
+        [SerializeField]
+        private GameObject _cardPrefab;
+
+        private CardController[] _player1Cards;
+        private CardController[] _player2Cards;
 
         private Material _cardAvatarBaseMaterial;
 
         private void Awake()
         {
             CreateCardAvatarBaseMaterial();
-            GeneratePlayerDecks();
+            CreatePlayerDecks();
         }
 
         private void CreateCardAvatarBaseMaterial()
@@ -37,9 +44,39 @@ namespace Cards
             _cardAvatarBaseMaterial.renderQueue = 2995;
         }
 
-        private void GeneratePlayerDecks()
+        private void CreatePlayerDecks()
         {
+            var random = new System.Random();
 
+            CardController[] CreatePlayerDeck(CardPackConfiguration[] packs, Transform deckParent)
+            {
+                IEnumerable<CardPropertiesData> cardData = new List<CardPropertiesData>();
+                foreach (var pack in packs) cardData = pack.UnionProperties(cardData);
+
+                var deckSize = Mathf.Min(_maxDeckSize, cardData.Count());
+                var cards = new CardController[deckSize];
+                var position = Vector3.zero;
+                var index = 0;
+
+                foreach (var data in cardData)
+                {
+                    position += new Vector3(0, 0.5f, 0);
+                    var cardGameObject = Instantiate(_cardPrefab, deckParent);
+                    cardGameObject.transform.localPosition = position;
+                    cardGameObject.transform.localScale = Vector3.one;
+                    var cardController = cardGameObject.GetComponent<CardController>();
+                    cardController.PseudoConstructor(data, _cardAvatarBaseMaterial);
+                    cards[index] = cardController;
+                    index++;
+                    if (index >= deckSize)
+                        break;
+                }
+                random.Shuffle(cards);
+                return cards;
+            }
+        
+            _player1Cards = CreatePlayerDeck(_player1Packs, _player1DeckParent);
+            _player2Cards = CreatePlayerDeck(_player2Packs, _player2DeckParent);
         }
     }
 }
