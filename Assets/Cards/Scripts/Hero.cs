@@ -4,7 +4,7 @@ using UnityEngine;
 
 namespace Cards
 {
-    public class HeroController : MonoBehaviour
+    public class Hero : MonoBehaviour
     {
         [SerializeField]
         private MeshRenderer _avatar;

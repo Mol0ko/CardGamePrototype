@@ -4,7 +4,7 @@ using UnityEngine;
 
 namespace Cards
 {
-    public class CardController : MonoBehaviour
+    public class Card : MonoBehaviour
     {
         [SerializeField]
         private MeshRenderer _avatar;
@@ -21,10 +21,13 @@ namespace Cards
         [SerializeField]
         private TextMeshPro _description;
 
-        public void PseudoConstructor(CardPropertiesData data, Material avatarBaseMaterial)
+        public void PseudoConstructor(CardPropertiesData data)
         {
-            avatarBaseMaterial.SetTexture(data.Name, data.Texture);
-            _avatar.material = avatarBaseMaterial;
+            var shader = Shader.Find("TextMeshPro/Sprite");
+            var material = new Material(shader);
+            material.renderQueue = 2995;
+            material.mainTexture = data.Texture;
+            _avatar.material = material;
             _name.text = data.Name;
             _cost.text = data.Cost.ToString();
             _attack.text = data.Attack.ToString();

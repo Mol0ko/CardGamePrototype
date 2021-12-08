@@ -20,41 +20,34 @@ namespace Cards
         [SerializeField]
         private Transform _player2DeckParent;
         [SerializeField]
-        private Transform[] _player1HandParents;
+        private PlayerHand _player1Hand;
         [SerializeField]
-        private Transform[] _player2HandParents;
+        private PlayerHand _player2Hand;
         [SerializeField]
         private GameObject _cardPrefab;
 
-        private CardController[] _player1Cards;
-        private CardController[] _player2Cards;
-
-        private Material _cardAvatarBaseMaterial;
+        private Card[] _player1DeckCards;
+        private Card[] _player2DeckCards;
 
         private void Awake()
         {
-            CreateCardAvatarBaseMaterial();
             CreatePlayerDecks();
-        }
-
-        private void CreateCardAvatarBaseMaterial()
-        {
-            var shader = Shader.Find("TextMeshPro/Sprite");
-            _cardAvatarBaseMaterial = new Material(shader);
-            _cardAvatarBaseMaterial.renderQueue = 2995;
+            PopulateHands();
         }
 
         private void CreatePlayerDecks()
         {
             var random = new System.Random();
 
-            CardController[] CreatePlayerDeck(CardPackConfiguration[] packs, Transform deckParent)
+            Card[] CreatePlayerDeck(CardPackConfiguration[] packs, Transform deckParent, bool reverseYRotation = false)
             {
                 IEnumerable<CardPropertiesData> cardData = new List<CardPropertiesData>();
                 foreach (var pack in packs) cardData = pack.UnionProperties(cardData);
+                var cardDataArray = cardData.ToArray();
+                random.Shuffle(cardDataArray);
 
-                var deckSize = Mathf.Min(_maxDeckSize, cardData.Count());
-                var cards = new CardController[deckSize];
+                var deckSize = Mathf.Min(_maxDeckSize, cardDataArray.Length);
+                var cards = new Card[deckSize];
                 var position = Vector3.zero;
                 var index = 0;
 
@@ -64,19 +57,26 @@ namespace Cards
                     var cardGameObject = Instantiate(_cardPrefab, deckParent);
                     cardGameObject.transform.localPosition = position;
                     cardGameObject.transform.localScale = Vector3.one;
-                    var cardController = cardGameObject.GetComponent<CardController>();
-                    cardController.PseudoConstructor(data, _cardAvatarBaseMaterial);
+                    if (reverseYRotation)
+                        cardGameObject.transform.rotation = Quaternion.Euler(0, 180, 0);
+                    var cardController = cardGameObject.GetComponent<Card>();
+                    cardController.PseudoConstructor(data);
                     cards[index] = cardController;
                     index++;
                     if (index >= deckSize)
                         break;
                 }
-                random.Shuffle(cards);
-                return cards;
+                return cards.Reverse().ToArray();
             }
-        
-            _player1Cards = CreatePlayerDeck(_player1Packs, _player1DeckParent);
-            _player2Cards = CreatePlayerDeck(_player2Packs, _player2DeckParent);
+
+            _player1DeckCards = CreatePlayerDeck(_player1Packs, _player1DeckParent, true);
+            _player2DeckCards = CreatePlayerDeck(_player2Packs, _player2DeckParent);
+        }
+
+        private void PopulateHands()
+        {
+            _player1Hand.AddCardsFromDeck(_player1DeckCards.Take(8));
+            _player2Hand.AddCardsFromDeck(_player2DeckCards.Take(8));
         }
     }
 }
