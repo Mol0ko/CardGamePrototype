@@ -13,11 +13,15 @@ namespace Cards
         [SerializeField]
         private TextMeshPro _hp;
         [SerializeField]
+        private TextMeshPro _manaValue;
+        [SerializeField]
         private TextAsset _heroesJsonFile;
         [SerializeField]
         private HeroClass _class;
         [SerializeField]
         private Material[] _avatarMaterials;
+
+        private int _mana = 0;
 
         private void Awake()
         {
@@ -48,6 +52,17 @@ namespace Cards
             _avatar.material = _avatarMaterials.FirstOrDefault(material => material.name == heroData.AvatarMaterial);
             _name.text = heroData.Name;
             _hp.text = heroData.Hp.ToString();
+            _manaValue.text = _mana + "/10";
+        }
+
+        public void IncrementMana() {
+            _mana = Mathf.Min(10, _mana + 1);
+            _manaValue.text = _mana + "/10";
+        }
+
+        public void DecrementMana() {
+            _mana = Mathf.Max(0, _mana - 1);
+            _manaValue.text = _mana + "/10";
         }
     }
 }
