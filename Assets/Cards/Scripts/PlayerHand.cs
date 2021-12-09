@@ -23,6 +23,7 @@ namespace Cards
                 {
                     var card = newCards.Dequeue();
                     _cards[i] = card;
+                    card.PassedToHand();
                     yield return new WaitForSeconds(0.1f);
                     StartCoroutine(MoveCardToHand(card, _cardParents[i]));
                 }
@@ -42,7 +43,6 @@ namespace Cards
             while (time < 1f)
             {
                 card.transform.position = Vector3.Lerp(startPos, endPos, time);
-                // card.transform.rotation = Quaternion.Slerp(startRotation, endRotation, time);
                 time += Time.deltaTime;
                 yield return null;
             }

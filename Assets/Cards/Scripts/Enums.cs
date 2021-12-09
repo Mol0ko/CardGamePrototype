@@ -16,4 +16,12 @@
 		Warrior = 2,
 		Priest = 3
 	}
+
+	public enum CardState : byte
+	{
+		Deck = 0,
+		Hand = 1,
+		Battle = 2,
+		Beaten = 3
+	}
 }
