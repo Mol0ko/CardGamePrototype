@@ -7,7 +7,7 @@ using UnityEngine.EventSystems;
 
 namespace Cards
 {
-    public class Card : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler, IPointerDownHandler
+    public class Card : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler, IPointerDownHandler, IBeginDragHandler, IEndDragHandler, IDragHandler
     {
         [SerializeField]
         private MeshRenderer _avatar;
@@ -23,6 +23,10 @@ namespace Cards
         private TextMeshPro _type;
         [SerializeField]
         private TextMeshPro _description;
+        [SerializeField]
+        private GameObject _attackIndicator;
+        [SerializeField]
+        private LineRenderer _attackLineRenderer;
 
         private ushort _hpValue;
         private CardState _state = CardState.Deck;
@@ -51,6 +55,7 @@ namespace Cards
         public void PassedToHand() => _state = CardState.Hand;
 
         public void PassedToBattle() => _state = CardState.Battle;
+
         public void AddDamage(ushort damage)
         {
             if (_state == CardState.Battle)
@@ -99,6 +104,37 @@ namespace Cards
             {
                 transform.localScale /= 1.15f;
                 OnClick?.Invoke(this);
+            }
+        }
+
+        public void OnBeginDrag(PointerEventData eventData)
+        {
+            if (_interactable && _state == CardState.Battle)
+            {
+                _attackIndicator.SetActive(true);
+                _attackLineRenderer.gameObject.SetActive(true);
+                var line = new Vector3[] {
+                    _attackIndicator.transform.position,
+                    eventData.pointerCurrentRaycast.worldPosition
+                };
+                _attackLineRenderer.SetPositions(line);
+            }
+        }
+
+        public void OnDrag(PointerEventData eventData)
+        {
+            if (_interactable && _state == CardState.Battle)
+            {
+                _attackLineRenderer.SetPosition(1, eventData.pointerCurrentRaycast.worldPosition);
+            }
+        }
+
+        public void OnEndDrag(PointerEventData eventData)
+        {
+            if (_interactable && _state == CardState.Battle)
+            {
+                _attackIndicator.SetActive(false);
+                _attackLineRenderer.gameObject.SetActive(false);
             }
         }
     }

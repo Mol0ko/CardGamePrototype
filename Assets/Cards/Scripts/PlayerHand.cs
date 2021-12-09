@@ -68,12 +68,11 @@ namespace Cards
         {
             if (!_cardPlayed)
             {
-                foreach (var c in _cards)
-                    c?.SetInteractable(false);
-
                 _battleField.AddCardFromHand(card);
                 var index = Array.IndexOf(_cards, card);
                 _cards[index] = null;
+                foreach (var c in _cards)
+                    c?.SetInteractable(false);
                 card.OnClick -= OnCardClick;
                 _cardPlayed = true;
             }
