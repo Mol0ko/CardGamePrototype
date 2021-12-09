@@ -28,14 +28,19 @@ namespace Cards
         [SerializeField]
         private LineRenderer _attackLineRenderer;
 
-        private ushort _hpValue;
-        private CardState _state = CardState.Deck;
+        public Player Player { get; private set; }
+        private int _currentHp;
+        private CardPropertiesData _data;
+        public CardState State { get; private set; } = CardState.Deck;
         private bool _interactable = false;
 
         public Action<Card> OnClick;
+        public Action<Card> OnAttack;
+        public Action<Card> OnDestroyCard;
 
-        public void PseudoConstructor(CardPropertiesData data)
+        public void PseudoConstructor(CardPropertiesData data, Player player)
         {
+            _data = data;
             var shader = Shader.Find("TextMeshPro/Sprite");
             var material = new Material(shader);
             material.renderQueue = 2995;
@@ -47,60 +52,67 @@ namespace Cards
             _hp.text = data.Health.ToString();
             _type.text = data.Type.ToString();
             _description.text = CardUtility.GetDescriptionById(data.Id);
-            _hpValue = data.Health;
+            _currentHp = data.Health;
+            Player = player;
         }
 
         public void SetInteractable(bool value) => _interactable = value;
 
-        public void PassedToHand() => _state = CardState.Hand;
+        public void PassedToHand() => State = CardState.Hand;
 
-        public void PassedToBattle() => _state = CardState.Battle;
+        public void PassedToBattle() => State = CardState.Battle;
 
-        public void AddDamage(ushort damage)
+        public void AddDamage(int damage)
         {
-            if (_state == CardState.Battle)
+            if (State == CardState.Battle)
             {
-                _hpValue -= damage;
+                _currentHp -= damage;
+                _hp.text = _currentHp.ToString();
+                Debug.Log("Damage to " + _data.Name + " : " + damage);
                 StartCoroutine(AnimateDamage());
-                if (_hpValue <= 0)
+                if (_currentHp <= 0)
                 {
-                    _state = CardState.Beaten;
+                    State = CardState.Beaten;
+                    Debug.Log(_data.Name + " killed");
                 }
             }
         }
 
         private IEnumerator AnimateDamage()
         {
-            var time = 1f;
-            var scaleDown = false;
-            var scaleDiff = new Vector3(0.3f, 0.3f, 0.3f);
+            var durationSec = 0.2f;
+            var upScale = new Vector3(1.1f, 1.1f, 1.1f);
+            var initialScale = transform.localScale;
 
-            while (time > 0)
+            for (float time = 0; time < durationSec * 2; time += Time.deltaTime)
             {
-                transform.eulerAngles = scaleDown ? transform.eulerAngles - scaleDiff : transform.eulerAngles + scaleDiff;
-                scaleDown = !scaleDown;
-                time -= Time.deltaTime;
+                float progress = Mathf.PingPong(time, durationSec) / durationSec;
+                transform.localScale = Vector3.Lerp(initialScale, upScale, progress);
                 yield return null;
             }
-            if (_hpValue <= 0)
+            transform.localScale = initialScale;
+            if (_currentHp <= 0)
+            {
                 Destroy(gameObject);
+                OnDestroyCard?.Invoke(this);
+            }
         }
 
         public void OnPointerEnter(PointerEventData eventData)
         {
-            if (_interactable && _state == CardState.Hand)
+            if (_interactable && State == CardState.Hand)
                 transform.localScale *= 1.15f;
         }
 
         public void OnPointerExit(PointerEventData eventData)
         {
-            if (_interactable && _state == CardState.Hand)
+            if (_interactable && State == CardState.Hand)
                 transform.localScale /= 1.15f;
         }
 
         public void OnPointerDown(PointerEventData eventData)
         {
-            if (_interactable && _state == CardState.Hand)
+            if (_interactable && State == CardState.Hand)
             {
                 transform.localScale /= 1.15f;
                 OnClick?.Invoke(this);
@@ -109,7 +121,7 @@ namespace Cards
 
         public void OnBeginDrag(PointerEventData eventData)
         {
-            if (_interactable && _state == CardState.Battle)
+            if (_interactable && State == CardState.Battle)
             {
                 _attackIndicator.SetActive(true);
                 _attackLineRenderer.gameObject.SetActive(true);
@@ -123,7 +135,7 @@ namespace Cards
 
         public void OnDrag(PointerEventData eventData)
         {
-            if (_interactable && _state == CardState.Battle)
+            if (_interactable && State == CardState.Battle)
             {
                 _attackLineRenderer.SetPosition(1, eventData.pointerCurrentRaycast.worldPosition);
             }
@@ -131,10 +143,35 @@ namespace Cards
 
         public void OnEndDrag(PointerEventData eventData)
         {
-            if (_interactable && _state == CardState.Battle)
+            if (_interactable && State == CardState.Battle)
             {
                 _attackIndicator.SetActive(false);
                 _attackLineRenderer.gameObject.SetActive(false);
+
+                var raycastedObject = eventData.pointerCurrentRaycast.gameObject;
+
+                if (raycastedObject == gameObject)
+                    return;
+
+                if (raycastedObject.name.Contains("CardPrefab"))
+                {
+                    var raycastedCard = raycastedObject.GetComponent<Card>();
+                    if (raycastedCard.Player != Player &&
+                        raycastedCard.State == CardState.Battle)
+                    {
+                        // Нанесение урона вражеской карте
+                        raycastedCard.AddDamage(_data.Attack);
+                        OnAttack?.Invoke(this);
+                    }
+                }
+                else if ((Player == Player.One && raycastedObject.name.Contains("Hero2")) ||
+                    (Player == Player.Two && raycastedObject.name.Contains("Hero1")))
+                {
+                    // Нанесение урона вражескому герою
+                    var hero = raycastedObject.GetComponent<Hero>();
+                    hero.AddDamage(_data.Attack);
+                    OnAttack?.Invoke(this);
+                }
             }
         }
     }

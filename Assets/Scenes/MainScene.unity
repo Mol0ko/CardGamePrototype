@@ -258,6 +258,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _parent: {fileID: 72410364}
+  _gameManager: {fileID: 2000741651}
 --- !u!1 &157451445
 GameObject:
   m_ObjectHideFlags: 0
@@ -612,6 +613,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _parent: {fileID: 326605991}
+  _gameManager: {fileID: 2000741651}
 --- !u!1 &403955024
 GameObject:
   m_ObjectHideFlags: 0
@@ -1153,7 +1155,7 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Materials.Array.data[0]
       value: 
-      objectReference: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
+      objectReference: {fileID: 2100000, guid: e73a58f6e2794ae7b1b7e50b7fb811b0, type: 2}
     - target: {fileID: 7918910454150586538, guid: d53d9bcf5d6ba42b58ceafc2a554ad1c,
         type: 3}
       propertyPath: m_textInfo.characterCount
@@ -2954,7 +2956,7 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls:
       - m_Target: {fileID: 2000741651}
-        m_MethodName: EndStep
+        m_MethodName: EndTurn
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -3160,7 +3162,7 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Materials.Array.data[0]
       value: 
-      objectReference: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
+      objectReference: {fileID: 2100000, guid: e73a58f6e2794ae7b1b7e50b7fb811b0, type: 2}
     - target: {fileID: 7918910454150586538, guid: d53d9bcf5d6ba42b58ceafc2a554ad1c,
         type: 3}
       propertyPath: m_text

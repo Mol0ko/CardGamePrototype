@@ -31,6 +31,9 @@ namespace Cards
         public void AddCardsFromDeck(IEnumerable<Card> cards)
             => StartCoroutine(AddCardsFromDeckRoutine(cards));
 
+        public void AddCardFromDeck(Card card)
+            => StartCoroutine(AddCardsFromDeckRoutine(new List<Card> { card }));
+
         private IEnumerator AddCardsFromDeckRoutine(IEnumerable<Card> cards)
         {
             var newCards = new Queue<Card>(cards);
