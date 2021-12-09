@@ -96,8 +96,10 @@ namespace Cards
         public void OnPointerDown(PointerEventData eventData)
         {
             if (_interactable && _state == CardState.Hand)
+            {
                 transform.localScale /= 1.15f;
-            OnClick?.Invoke(this);
+                OnClick?.Invoke(this);
+            }
         }
     }
 }

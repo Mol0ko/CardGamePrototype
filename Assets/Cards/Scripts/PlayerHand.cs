@@ -1,5 +1,6 @@
 namespace Cards
 {
+    using System;
     using System.Collections;
     using System.Collections.Generic;
     using UnityEngine;
@@ -16,8 +17,16 @@ namespace Cards
         private Card[] _cards = new Card[8];
 
         private bool _activePlayer = false;
+        private bool _cardPlayed = false;
 
-        public void SetActivePlayer(bool value) => _activePlayer = value;
+        public void SetActivePlayer(bool value)
+        {
+            _activePlayer = value;
+            foreach (var card in _cards)
+                card?.SetInteractable(value);
+            if (value)
+                _cardPlayed = false;
+        }
 
         public void AddCardsFromDeck(IEnumerable<Card> cards)
             => StartCoroutine(AddCardsFromDeckRoutine(cards));
@@ -52,13 +61,22 @@ namespace Cards
                 yield return null;
             }
             card.transform.Rotate(0, 0, 180);
-            card.SetInteractable(true);
+            card.SetInteractable(_activePlayer);
         }
 
-        private void OnCardClick(Card card) {
-            _battleField.AddCardFromHand(card);
-            card.OnClick -= OnCardClick;
-            _gameManager.EndStep();
+        private void OnCardClick(Card card)
+        {
+            if (!_cardPlayed)
+            {
+                foreach (var c in _cards)
+                    c?.SetInteractable(false);
+
+                _battleField.AddCardFromHand(card);
+                var index = Array.IndexOf(_cards, card);
+                _cards[index] = null;
+                card.OnClick -= OnCardClick;
+                _cardPlayed = true;
+            }
         }
     }
 }
