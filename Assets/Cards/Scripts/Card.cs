@@ -1,4 +1,5 @@
 
+using System;
 using System.Collections;
 using TMPro;
 using UnityEngine;
@@ -6,7 +7,7 @@ using UnityEngine.EventSystems;
 
 namespace Cards
 {
-    public class Card : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler
+    public class Card : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler, IPointerDownHandler
     {
         [SerializeField]
         private MeshRenderer _avatar;
@@ -25,6 +26,8 @@ namespace Cards
 
         private ushort _hpValue;
         private CardState _state = CardState.Deck;
+
+        public Action<Card> OnClick;
 
         public void PseudoConstructor(CardPropertiesData data)
         {
@@ -85,6 +88,13 @@ namespace Cards
         {
             if (_state == CardState.Hand)
                 transform.localScale /= 1.15f;
+        }
+
+        public void OnPointerDown(PointerEventData eventData)
+        {
+            if (_state == CardState.Hand)
+                transform.localScale /= 1.15f;
+            OnClick?.Invoke(this);
         }
     }
 }

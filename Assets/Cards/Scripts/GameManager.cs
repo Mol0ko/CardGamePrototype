@@ -39,7 +39,7 @@ namespace Cards
         {
             var random = new System.Random();
 
-            Card[] CreatePlayerDeck(CardPackConfiguration[] packs, Transform deckParent, bool reverseYRotation = false)
+            Card[] CreatePlayerDeck(CardPackConfiguration[] packs, Transform deckParent)
             {
                 IEnumerable<CardPropertiesData> cardData = new List<CardPropertiesData>();
                 foreach (var pack in packs) cardData = pack.UnionProperties(cardData);
@@ -57,8 +57,7 @@ namespace Cards
                     var cardGameObject = Instantiate(_cardPrefab, deckParent);
                     cardGameObject.transform.localPosition = position;
                     cardGameObject.transform.localScale = Vector3.one;
-                    if (reverseYRotation)
-                        cardGameObject.transform.rotation = Quaternion.Euler(0, 180, 0);
+                    cardGameObject.transform.localRotation = Quaternion.Euler(0, 180, 0);
                     var cardController = cardGameObject.GetComponent<Card>();
                     cardController.PseudoConstructor(data);
                     cards[index] = cardController;
@@ -69,7 +68,7 @@ namespace Cards
                 return cards.Reverse().ToArray();
             }
 
-            _player1DeckCards = CreatePlayerDeck(_player1Packs, _player1DeckParent, true);
+            _player1DeckCards = CreatePlayerDeck(_player1Packs, _player1DeckParent);
             _player2DeckCards = CreatePlayerDeck(_player2Packs, _player2DeckParent);
         }
 

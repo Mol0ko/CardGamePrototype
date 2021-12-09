@@ -8,6 +8,8 @@ namespace Cards
     {
         [SerializeField]
         private Transform[] _cardParents;
+        [SerializeField]
+        private PlayerBattleField _battleField;
 
         private Card[] _cards = new Card[8];
 
@@ -23,6 +25,7 @@ namespace Cards
                 {
                     var card = newCards.Dequeue();
                     _cards[i] = card;
+                    card.OnClick += OnCardClick;
                     card.PassedToHand();
                     yield return new WaitForSeconds(0.1f);
                     StartCoroutine(MoveCardToHand(card, _cardParents[i]));
@@ -36,10 +39,6 @@ namespace Cards
             var startPos = card.transform.position;
             var endPos = target.position;
 
-            var startRotation = card.transform.rotation;
-            var eulerAngles = card.transform.eulerAngles;
-            var endRotation = Quaternion.Euler(eulerAngles.x, eulerAngles.y, eulerAngles.z + 180);
-
             while (time < 1f)
             {
                 card.transform.position = Vector3.Lerp(startPos, endPos, time);
@@ -47,6 +46,11 @@ namespace Cards
                 yield return null;
             }
             card.transform.Rotate(0, 0, 180);
+        }
+
+        private void OnCardClick(Card card) {
+            _battleField.AddCardFromHand(card);
+            card.OnClick -= OnCardClick;
         }
     }
 }
