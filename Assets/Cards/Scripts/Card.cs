@@ -26,6 +26,7 @@ namespace Cards
 
         private ushort _hpValue;
         private CardState _state = CardState.Deck;
+        private bool _interactable = false;
 
         public Action<Card> OnClick;
 
@@ -44,6 +45,8 @@ namespace Cards
             _description.text = CardUtility.GetDescriptionById(data.Id);
             _hpValue = data.Health;
         }
+
+        public void SetInteractable(bool value) => _interactable = value;
 
         public void PassedToHand() => _state = CardState.Hand;
 
@@ -80,19 +83,19 @@ namespace Cards
 
         public void OnPointerEnter(PointerEventData eventData)
         {
-            if (_state == CardState.Hand)
+            if (_interactable && _state == CardState.Hand)
                 transform.localScale *= 1.15f;
         }
 
         public void OnPointerExit(PointerEventData eventData)
         {
-            if (_state == CardState.Hand)
+            if (_interactable && _state == CardState.Hand)
                 transform.localScale /= 1.15f;
         }
 
         public void OnPointerDown(PointerEventData eventData)
         {
-            if (_state == CardState.Hand)
+            if (_interactable && _state == CardState.Hand)
                 transform.localScale /= 1.15f;
             OnClick?.Invoke(this);
         }

@@ -5,6 +5,8 @@ using UnityEngine;
 
 namespace Cards
 {
+    enum Player : byte { One, Two }
+
     public class GameManager : MonoBehaviour
     {
         [SerializeField, Range(10, 30), Space]
@@ -25,14 +27,36 @@ namespace Cards
         private PlayerHand _player2Hand;
         [SerializeField]
         private GameObject _cardPrefab;
+        [SerializeField, Space]
+        private CameraController _cameraController;
 
         private Card[] _player1DeckCards;
         private Card[] _player2DeckCards;
+        private Player _activePlayer;
 
         private void Awake()
         {
             CreatePlayerDecks();
             PopulateHands();
+            _player1Hand.SetActivePlayer(true);
+            _activePlayer = Player.One;
+        }
+
+        public void EndStep()
+        {
+            if (_activePlayer == Player.One)
+            {
+                _player1Hand.SetActivePlayer(false);
+                _player2Hand.SetActivePlayer(true);
+                _activePlayer = Player.Two;
+            }
+            else if (_activePlayer == Player.Two)
+            {
+                _player1Hand.SetActivePlayer(true);
+                _player2Hand.SetActivePlayer(false);
+                _activePlayer = Player.One;
+            }
+            _cameraController.RotateAroundY180();
         }
 
         private void CreatePlayerDecks()

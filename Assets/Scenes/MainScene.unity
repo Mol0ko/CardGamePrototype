@@ -505,6 +505,7 @@ MonoBehaviour:
   - {fileID: 910185217}
   - {fileID: 994269963}
   _battleField: {fileID: 326605992}
+  _gameManager: {fileID: 0}
 --- !u!1 &280342992
 GameObject:
   m_ObjectHideFlags: 0
@@ -566,6 +567,7 @@ MonoBehaviour:
   - {fileID: 167231965}
   - {fileID: 1063158964}
   _battleField: {fileID: 72410365}
+  _gameManager: {fileID: 0}
 --- !u!1 &326605990
 GameObject:
   m_ObjectHideFlags: 0
@@ -2211,6 +2213,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1472629009}
+  - component: {fileID: 1472629010}
   m_Layer: 0
   m_Name: CameraAxis
   m_TagString: Untagged
@@ -2225,14 +2228,26 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1472629008}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalRotation: {x: 0, y: 1, z: 0, w: 0}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 963194228}
   m_Father: {fileID: 0}
   m_RootOrder: 0
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 180, z: 0}
+--- !u!114 &1472629010
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1472629008}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9508b4104d3f84b8b92bf6db30109887, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1581949815
 GameObject:
   m_ObjectHideFlags: 0
@@ -2633,6 +2648,7 @@ MonoBehaviour:
   _player2Hand: {fileID: 280342994}
   _cardPrefab: {fileID: 1307249474124220039, guid: 1efffdaff08b40c44aa84086651f4a25,
     type: 3}
+  _cameraController: {fileID: 1472629010}
 --- !u!4 &2000741652
 Transform:
   m_ObjectHideFlags: 0

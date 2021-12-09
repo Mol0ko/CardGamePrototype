@@ -10,8 +10,14 @@ namespace Cards
         private Transform[] _cardParents;
         [SerializeField]
         private PlayerBattleField _battleField;
+        [SerializeField]
+        private GameManager _gameManager;
 
         private Card[] _cards = new Card[8];
+
+        private bool _activePlayer = false;
+
+        public void SetActivePlayer(bool value) => _activePlayer = value;
 
         public void AddCardsFromDeck(IEnumerable<Card> cards)
             => StartCoroutine(AddCardsFromDeckRoutine(cards));
@@ -46,11 +52,13 @@ namespace Cards
                 yield return null;
             }
             card.transform.Rotate(0, 0, 180);
+            card.SetInteractable(true);
         }
 
         private void OnCardClick(Card card) {
             _battleField.AddCardFromHand(card);
             card.OnClick -= OnCardClick;
+            _gameManager.EndStep();
         }
     }
 }
