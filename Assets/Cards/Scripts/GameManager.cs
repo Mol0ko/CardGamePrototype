@@ -27,6 +27,10 @@ namespace Cards
         private PlayerHand _player2Hand;
         [SerializeField]
         private GameObject _cardPrefab;
+        [SerializeField]
+        private Hero _player1Hero;
+        [SerializeField]
+        private Hero _player2Hero;
         [SerializeField, Space]
         private CameraController _cameraController;
 
@@ -48,12 +52,14 @@ namespace Cards
             {
                 _player1Hand.SetActivePlayer(false);
                 _player2Hand.SetActivePlayer(true);
+                _player1Hero.IncrementMana();
                 _activePlayer = Player.Two;
             }
             else if (_activePlayer == Player.Two)
             {
                 _player1Hand.SetActivePlayer(true);
                 _player2Hand.SetActivePlayer(false);
+                _player2Hero.IncrementMana();
                 _activePlayer = Player.One;
             }
             _cameraController.RotateAroundY180();

@@ -2116,6 +2116,18 @@ MeshFilter:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1349373384}
   m_Mesh: {fileID: 10202, guid: 0000000000000000e000000000000000, type: 0}
+--- !u!114 &1398997508 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 6312044068131112460, guid: d53d9bcf5d6ba42b58ceafc2a554ad1c,
+    type: 3}
+  m_PrefabInstance: {fileID: 740018804}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1b57ab1d0263c46d39ba79f3a0bd86fc, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1412154817
 GameObject:
   m_ObjectHideFlags: 0
@@ -2209,6 +2221,18 @@ MeshFilter:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1412154817}
   m_Mesh: {fileID: 10202, guid: 0000000000000000e000000000000000, type: 0}
+--- !u!114 &1433776254 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 6312044068131112460, guid: d53d9bcf5d6ba42b58ceafc2a554ad1c,
+    type: 3}
+  m_PrefabInstance: {fileID: 7918910453925369164}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1b57ab1d0263c46d39ba79f3a0bd86fc, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1472629008
 GameObject:
   m_ObjectHideFlags: 0
@@ -2830,6 +2854,8 @@ MonoBehaviour:
   _player2Hand: {fileID: 280342994}
   _cardPrefab: {fileID: 1307249474124220039, guid: 1efffdaff08b40c44aa84086651f4a25,
     type: 3}
+  _player1Hero: {fileID: 1433776254}
+  _player2Hero: {fileID: 1398997508}
   _cameraController: {fileID: 1472629010}
 --- !u!4 &2000741652
 Transform:
