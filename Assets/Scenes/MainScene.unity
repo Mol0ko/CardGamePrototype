@@ -505,7 +505,7 @@ MonoBehaviour:
   - {fileID: 910185217}
   - {fileID: 994269963}
   _battleField: {fileID: 326605992}
-  _gameManager: {fileID: 0}
+  _gameManager: {fileID: 2000741651}
 --- !u!1 &280342992
 GameObject:
   m_ObjectHideFlags: 0
@@ -567,7 +567,7 @@ MonoBehaviour:
   - {fileID: 167231965}
   - {fileID: 1063158964}
   _battleField: {fileID: 72410365}
-  _gameManager: {fileID: 0}
+  _gameManager: {fileID: 2000741651}
 --- !u!1 &326605990
 GameObject:
   m_ObjectHideFlags: 0
