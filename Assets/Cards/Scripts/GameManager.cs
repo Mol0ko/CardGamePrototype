@@ -52,7 +52,8 @@ namespace Cards
                 _player2Hand.SetActivePlayer(true);
                 _player1Hero.IncrementMana();
                 _activePlayer = Player.Two;
-                _player2Hand.AddCardFromDeck(_player2DeckCards.Dequeue());
+                if (_player2DeckCards.Count > 0)
+                    _player2Hand.AddCardFromDeck(_player2DeckCards.Dequeue());
             }
             else if (_activePlayer == Player.Two)
             {
@@ -60,7 +61,8 @@ namespace Cards
                 _player2Hand.SetActivePlayer(false);
                 _player2Hero.IncrementMana();
                 _activePlayer = Player.One;
-                _player1Hand.AddCardFromDeck(_player1DeckCards.Dequeue());
+                if (_player1DeckCards.Count > 0)
+                    _player1Hand.AddCardFromDeck(_player1DeckCards.Dequeue());
             }
             _cameraController.RotateAroundY180();
         }
