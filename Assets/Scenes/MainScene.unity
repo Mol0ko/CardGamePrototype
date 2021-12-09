@@ -258,7 +258,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _parent: {fileID: 72410364}
+  _opponentHero: {fileID: 1433776254}
+  _opponentBattleField: {fileID: 326605992}
   _gameManager: {fileID: 2000741651}
+  Cards: []
 --- !u!1 &157451445
 GameObject:
   m_ObjectHideFlags: 0
@@ -507,6 +510,15 @@ MonoBehaviour:
   - {fileID: 994269963}
   _battleField: {fileID: 326605992}
   _gameManager: {fileID: 2000741651}
+  Cards:
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
 --- !u!1 &280342992
 GameObject:
   m_ObjectHideFlags: 0
@@ -569,6 +581,15 @@ MonoBehaviour:
   - {fileID: 1063158964}
   _battleField: {fileID: 72410365}
   _gameManager: {fileID: 2000741651}
+  Cards:
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
 --- !u!1 &326605990
 GameObject:
   m_ObjectHideFlags: 0
@@ -613,7 +634,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _parent: {fileID: 326605991}
+  _opponentHero: {fileID: 1398997508}
+  _opponentBattleField: {fileID: 72410365}
   _gameManager: {fileID: 2000741651}
+  Cards: []
 --- !u!1 &403955024
 GameObject:
   m_ObjectHideFlags: 0

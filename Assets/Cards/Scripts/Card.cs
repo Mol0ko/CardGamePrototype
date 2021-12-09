@@ -35,7 +35,7 @@ namespace Cards
         private bool _interactable = false;
 
         public Action<Card> OnClick;
-        public Action<Card> OnAttack;
+        public Action<AttackData> OnAttack;
         public Action<Card> OnDestroyCard;
 
         public void PseudoConstructor(CardPropertiesData data, Player player)
@@ -64,7 +64,10 @@ namespace Cards
 
         public string GetSkill() => CardUtility.GetDescriptionById(_data.Id);
 
-        public void Heal(int hp) {
+        public int GetAttack() => _data.Attack;
+
+        public void Heal(int hp)
+        {
             _currentHp += hp;
             _hp.text = _currentHp.ToString();
         }
@@ -167,8 +170,8 @@ namespace Cards
                         raycastedCard.State == CardState.Battle)
                     {
                         // Нанесение урона вражеской карте
-                        raycastedCard.AddDamage(_data.Attack);
-                        OnAttack?.Invoke(this);
+                        var attackData = new AttackData(this, raycastedCard, null);
+                        OnAttack?.Invoke(attackData);
                     }
                 }
                 else if ((Player == Player.One && raycastedObject.name.Contains("Hero2")) ||
@@ -176,8 +179,8 @@ namespace Cards
                 {
                     // Нанесение урона вражескому герою
                     var hero = raycastedObject.GetComponent<Hero>();
-                    hero.AddDamage(_data.Attack);
-                    OnAttack?.Invoke(this);
+                    var attackData = new AttackData(this, null, hero);
+                    OnAttack?.Invoke(attackData);
                 }
             }
         }

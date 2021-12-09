@@ -74,14 +74,39 @@ namespace Cards
                     if (opponentCards.Count > 0)
                         opponentCards[0].AddDamage(2);
                     break;
+                case "Charge": // Charge соответствует способности "Рывок", описанной в ТЗ.
+                    // Ремарка: я реализовал механику атак не по ТЗ, потому что поздно обратил внимание на пункт с описанием рывка. 
+                    // В моей реализации карта может атаковать в тот же ход, когда она выложена в поле. 
+                    // А рывок делает дополнительную автоматическую атаку сразу при выкладывании карты.
+                    if (opponentCards.Count > 0)
+                        opponentCards[0].AddDamage(card.GetAttack());
+                    break;
                 default:
+                    Debug.Log("Unknown skill: " + skill);
                     return;
             }
             Debug.Log("Skill applied: " + skill);
         }
 
-        private void OnAttackByCard(Card card)
-            => StartCoroutine(EndTurnAfterDelay());
+        private void OnAttackByCard(AttackData data)
+        {
+            var opponentSkills = _opponentBattleField.Cards.Select(c => c.GetSkill());
+            var opponentHasTaunt = opponentSkills.Any(skill => skill.Contains("Taunt"));
+            var targetCardHasTaunt = data.TargetCard?.GetSkill()?.Contains("Taunt") ?? false;
+
+            if (opponentHasTaunt && !targetCardHasTaunt)
+                Debug.Log("Attack failed: opponent has card with Taunt skill");
+            else
+            {
+                var damage = data.Dealer.GetAttack();
+                if (data.TargetCard != null)
+                    data.TargetCard.AddDamage(damage);
+                else if (data.TargetHero != null)
+                    data.TargetHero.AddDamage(damage);
+
+                StartCoroutine(EndTurnAfterDelay());
+            }
+        }
 
         private IEnumerator EndTurnAfterDelay()
         {
