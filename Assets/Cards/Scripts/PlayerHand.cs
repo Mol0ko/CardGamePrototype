@@ -14,7 +14,7 @@ namespace Cards
         [SerializeField]
         private GameManager _gameManager;
 
-        private Card[] _cards = new Card[8];
+        public Card[] Cards = new Card[8];
 
         private bool _activePlayer = false;
         private bool _cardPlayed = false;
@@ -22,7 +22,7 @@ namespace Cards
         public void SetActivePlayer(bool value)
         {
             _activePlayer = value;
-            foreach (var card in _cards)
+            foreach (var card in Cards)
                 card?.SetInteractable(value);
             if (value)
                 _cardPlayed = false;
@@ -37,12 +37,12 @@ namespace Cards
         private IEnumerator AddCardsFromDeckRoutine(IEnumerable<Card> cards)
         {
             var newCards = new Queue<Card>(cards);
-            for (int i = 0; i < _cards.Length; i++)
+            for (int i = 0; i < Cards.Length; i++)
             {
-                if (_cards[i] == null)
+                if (Cards[i] == null)
                 {
                     var card = newCards.Dequeue();
-                    _cards[i] = card;
+                    Cards[i] = card;
                     card.OnClick += OnCardClick;
                     card.PassedToHand();
                     yield return new WaitForSeconds(0.1f);
@@ -72,9 +72,9 @@ namespace Cards
             if (!_cardPlayed)
             {
                 _battleField.AddCardFromHand(card);
-                var index = Array.IndexOf(_cards, card);
-                _cards[index] = null;
-                foreach (var c in _cards)
+                var index = Array.IndexOf(Cards, card);
+                Cards[index] = null;
+                foreach (var c in Cards)
                     c?.SetInteractable(false);
                 card.OnClick -= OnCardClick;
                 _cardPlayed = true;

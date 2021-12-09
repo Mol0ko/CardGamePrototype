@@ -59,7 +59,7 @@ namespace Cards
             _manaValue.text = _mana + "/10";
         }
 
-        public void AddDamage(ushort damage)
+        public void AddDamage(int damage)
         {
             _currentHp -= damage;
             _hp.text = _currentHp.ToString();

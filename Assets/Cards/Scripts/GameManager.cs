@@ -54,6 +54,8 @@ namespace Cards
                 _activePlayer = Player.Two;
                 if (_player2DeckCards.Count > 0)
                     _player2Hand.AddCardFromDeck(_player2DeckCards.Dequeue());
+                else
+                    _player2Hero.AddDamage(8 - _player2Hand.Cards.Length);
             }
             else if (_activePlayer == Player.Two)
             {
@@ -63,6 +65,8 @@ namespace Cards
                 _activePlayer = Player.One;
                 if (_player1DeckCards.Count > 0)
                     _player1Hand.AddCardFromDeck(_player1DeckCards.Dequeue());
+                else
+                    _player1Hero.AddDamage(8 - _player2Hand.Cards.Length);
             }
             _cameraController.RotateAroundY180();
         }

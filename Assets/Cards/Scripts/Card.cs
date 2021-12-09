@@ -62,6 +62,13 @@ namespace Cards
 
         public void PassedToBattle() => State = CardState.Battle;
 
+        public string GetSkill() => CardUtility.GetDescriptionById(_data.Id);
+
+        public void Heal(int hp) {
+            _currentHp += hp;
+            _hp.text = _currentHp.ToString();
+        }
+
         public void AddDamage(int damage)
         {
             if (State == CardState.Battle)
